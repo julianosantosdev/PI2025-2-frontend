@@ -1,5 +1,11 @@
+import NavBarStyled from './style';
+
 const NavBar = () => {
-  return <h1>Navbar Aqui</h1>;
+  return (
+    <NavBarStyled>
+      <h1>Aqui</h1>
+    </NavBarStyled>
+  );
 };
 
 export default NavBar;
