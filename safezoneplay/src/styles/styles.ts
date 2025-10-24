@@ -43,10 +43,30 @@ export const colors = {
 };
 
 export const globalStyles = globalCss({
+
+  '@font-face': [{
+    fontFamily: 'Play',
+    src: 'url("/fonts/Play/Play-Regular.ttf") format("truetype")',
+    fontWeight: 400,
+    fontStyle: 'normal'
+  },
+  {
+    fontFamily: 'Play',
+    src: 'url("/fonts/Play/Play-Bold.ttf") format("truetype")',
+    fontWeight: 700,
+    fontStyle: 'normal'
+  },
+  {
+    fontFamily: 'Inter',
+    src: 'url("/fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype")',
+    fontWeight: '100 900',
+    fontStyle: 'normal'
+  }],
+
   '*': {
     margin: 0,
     padding: 0,
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: '$play',
     boxSizing: 'border-box'
   },
   html: {

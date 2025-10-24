@@ -47,7 +47,7 @@ export const GlobalStyle: React.FC<GlobalStyleProps> = ({ children }) => {
       3: '2rem'
     },
     fonts: {
-      play: '"Play", sans-serif;',
+      play: 'Play, sans-serif;',
       inter: '"Inter", sans-serif'
     },
     fontSizes: {
