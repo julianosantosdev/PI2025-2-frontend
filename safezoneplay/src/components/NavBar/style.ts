@@ -30,6 +30,7 @@ const Nav = styled('nav', {
     display: 'flex',
     justifyContent: 'center',
     paddingBottom: '1rem',
+    cursor: "pointer",
 
     img: {
       maxWidth: '100%'

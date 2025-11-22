@@ -38,7 +38,7 @@ const NavBar = () => {
       <Container>
         <Nav>
           <div className='nav-container-logo'>
-            <img src={logo} alt='sfc_logo' />
+            <img src={logo} alt='sfc_logo' onClick={() => navigate('/home')} />
           </div>
           <MenuContainer>
             <form
