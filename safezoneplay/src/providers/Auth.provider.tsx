@@ -70,7 +70,7 @@ const AuthProvider = ({ children }: IDefaultProviderProp) => {
     setUserdata(null);
 
     toast.success('Logout realizado com sucesso!');
-    navigate('/login');
+    navigate('/start/login');
   };
 
   useEffect(() => {
