@@ -5,11 +5,17 @@ import { Loading } from '@components/Loading/Loading.component';
 import Button from '@components/Buttons/Buttons';
 import { api } from '@services/api';
 import handleAxiosErrors from '@utils/axiosErrorStandard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PremiumPaymentPage = () => {
   const { userData, userLoading } = useAuth();
   const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [paymentId, setPaymentId] = useState<string | null>(null);
+  const [checkingStatus, setCheckingStatus] = useState(false);
+  const [paymentApproved, setPaymentApproved] = useState(false);
+
+  const navigate = useNavigate();
 
   const subscribePremium = async () => {
     try {
@@ -18,13 +24,51 @@ const PremiumPaymentPage = () => {
         userId: userData?.id,
         type: 'pix'
       } as { email: string; userId: string; type: string });
-      const qrCode = `data:image/png;base64,${subscribeRequest.data.qr_code_base64}`;
 
+      const qrCode = `data:image/png;base64,${subscribeRequest.data.qr_code_base64}`;
       setQrCodeUrl(qrCode);
+
+      setPaymentId(subscribeRequest.data.paymentId);
+
+      setCheckingStatus(true);
     } catch (error) {
       handleAxiosErrors(error);
     }
   };
+
+  useEffect(() => {
+    if (!paymentId) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const { data } = await api.get(`/payment/status/${paymentId}`);
+
+        const status = data?.status as string | undefined;
+
+        if (!status) return;
+
+        if (['approved'].includes(status)) {
+          setPaymentApproved(true);
+          setCheckingStatus(false);
+          clearInterval(interval);
+        }
+      } catch (error) {
+        handleAxiosErrors(error);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [paymentId]);
+
+  useEffect(() => {
+    if (!paymentApproved) return;
+
+    const timeout = setTimeout(() => {
+      navigate('/', { replace: true });
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [paymentApproved]);
 
   return (
     <PremiumPageMain>
@@ -58,12 +102,23 @@ const PremiumPaymentPage = () => {
               </>
             ) : (
               <>
-                <h2>Escaneie o QR Code para pagar</h2>
-                <p>Depois de confirmar o pagamento, sua conta vira premium automaticamente.</p>
+                {paymentApproved ? (
+                  <>
+                    <h2>Pagamento confirmado! ✅</h2>
+                    <p>Sua conta será atualizada para premium em instantes.</p>
+                  </>
+                ) : (
+                  <>
+                    <h2>Escaneie o QR Code para pagar</h2>
+                    <p>Depois de confirmar o pagamento, sua conta vira premium automaticamente.</p>
 
-                <QrWrapper>
-                  <img src={qrCodeUrl} alt='QR Code para pagamento' />
-                </QrWrapper>
+                    <QrWrapper>
+                      <img src={qrCodeUrl} alt='QR Code para pagamento' />
+                    </QrWrapper>
+
+                    {checkingStatus && <p style={{ fontSize: 12, opacity: 0.7 }}>Estamos verificando o pagamento...</p>}
+                  </>
+                )}
               </>
             )}
           </PaymentContainer>

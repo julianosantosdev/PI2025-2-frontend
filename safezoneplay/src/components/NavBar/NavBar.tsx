@@ -32,7 +32,7 @@ const NavBar = () => {
         setHidden(false);
       }
 
-      lastScroll.current = currentScroll <= 0 ? 0 : currentScroll;
+      if (userData.premium == true) lastScroll.current = currentScroll <= 0 ? 0 : currentScroll;
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -86,7 +86,14 @@ const NavBar = () => {
             //   navigate('/perfil');
             // }}
             >
-              <a href='/premium'>{<MdOutlineWorkspacePremium />}Area Premium</a>
+              {userData?.premium === false && (
+                <NavItem>
+                  <a href='/premium'>
+                    <MdOutlineWorkspacePremium />
+                    Area Premium
+                  </a>
+                </NavItem>
+              )}
             </NavItem>
             <NavItem>
               <CgProfile />
