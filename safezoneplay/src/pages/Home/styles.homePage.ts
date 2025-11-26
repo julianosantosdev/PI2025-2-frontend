@@ -8,6 +8,15 @@ const StyledMain = styled('section', {
 
   '#cardlist-myGames, #cardList-popularGames': {
     padding: '4rem 0'
+  },
+  '#noGames-message': {
+    fontSize: '2rem',
+    padding: '$3',
+    fontWeight: '$bold'
+  },
+
+  '.hideButton': {
+    display: 'none'
   }
 });
 export { StyledMain };

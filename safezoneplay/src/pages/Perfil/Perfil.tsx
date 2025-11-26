@@ -302,7 +302,7 @@ export default function Perfil() {
             <Loading />
           ) : (
             <CardsGrid ref={cardAreaRef}>
-              {userGames?.data.length === 0 && <span>Nenhum jogo encontrado</span>}
+              {userGames?.data?.length === 0 && <span>Nenhum jogo encontrado</span>}
 
               {userGames?.data?.map((game) => (
                 <GameCard key={game.game.idGame} onClick={() => navigate(`/game/${game.gameId}`)}>

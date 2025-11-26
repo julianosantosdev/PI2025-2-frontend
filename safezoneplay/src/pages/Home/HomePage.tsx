@@ -38,12 +38,16 @@ const HomePage = () => {
           {gameLoading || userLoading ? (
             <Loading />
           ) : userGames?.data?.length === 0 ? (
-            <p>Não há jogos cadastrados ainda... Adicione-os e eles aparecerão aqui! 🕹️</p>
+            <p id='noGames-message'>Não há jogos cadastrados ainda... Adicione-os e eles aparecerão aqui! 🕹️</p>
           ) : (
             <GameCardList gameList={userGames?.data?.map((item) => item.game) ?? []} direction='grid' />
           )}
 
-          <Button onClick={() => setPage(page + 1)} type={'moreResultsButton'}>
+          <Button
+            onClick={() => setPage(page + 1)}
+            type={'moreResultsButton'}
+            className={userGames?.totalGames < 10 ? 'hideButton' : ''}
+          >
             MAIS
           </Button>
         </section>
