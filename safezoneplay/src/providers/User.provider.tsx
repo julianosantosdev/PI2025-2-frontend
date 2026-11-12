@@ -16,7 +16,10 @@ const UserProvider = ({ children }: IDefaultProviderProp) => {
       formData.append('name', data.name);
       formData.append('username', data.username);
       formData.append('password', data.password);
-      formData.append('confirmPassword', data.confirmPassword);
+      
+      if (data.bio) {
+        formData.append('bio', data.bio);
+      }
 
       if (data.profile_image_url instanceof File) {
         formData.append('profile_image_url', data.profile_image_url);
