@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@stitches/react": "^1.2.8",
+    "@vercel/speed-insights": "^2.1.0",
     "axios": "^1.12.2",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
